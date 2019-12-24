@@ -18,34 +18,31 @@ const styles = StyleSheet.create({
 export default class Cadastro extends Component {
 
     state = {
-        //nome: '',
-        //login: '',
+        nome: '',
+        login: '',
         idioma: '',
         errorMessage: '',
-        //id: null
+        id: null
     }
 
     salvar = async () => {
-        //if (this.state.nome.length === 0 || this.state.login.length === 0) {
-        //    this.setState({ errorMessage: 'Preencha nome, usuário e senha para continuar!' });
-        //    return;
-        //}
-        //if (this.state.login.length < 6) {
-        //    this.setState({ errorMessage: 'O Login precisa ser maior que 6 caracteres' });
-        //    return;
-        //}
+        if (this.state.nome.length === 0 || this.state.login.length === 0) {
+            this.setState({ errorMessage: 'Preencha nome, usuário e senha para continuar!' });
+            return;
+        }
+        if (this.state.login.length < 6) {
+            this.setState({ errorMessage: 'O Login precisa ser maior que 6 caracteres' });
+            return;
+        }
         try {
-            //const response = await api.put('/usuarios/' + this.state.id, {
-            //    nome: this.state.nome,
-            //    login: this.state.login,
-            //    idioma: this.state.idioma
-            //});
+            const response = await api.put('/usuarios/' + this.state.id, {
+                nome: this.state.nome,
+                login: this.state.login,
+                idioma: this.state.idioma
+            });
 
-            //await AsyncStorage.multiSet([
-            //    ['@OlhoFake:usuario', JSON.stringify(response.data)],
-            //]);
             await AsyncStorage.multiSet([
-                ['@Zoio:idioma', this.state.idioma],
+                ['@OlhoFake:usuario', JSON.stringify(response.data)],
             ]);
 
             const { navigate } = this.props.navigation;
@@ -58,14 +55,12 @@ export default class Cadastro extends Component {
     }
 
     async componentWillMount() {
-        //let usuario = await AsyncStorage.getItem("@OlhoFake:usuario")
-        //let user = JSON.parse(usuario);
-        //this.setState({ nome: user.nome })
-        //this.setState({ login: user.login })
-        //this.setState({ idioma: user.idioma })
-        //this.setState({ id: user.id })
-        let idioma = await AsyncStorage.getItem("@Zoio:idioma")
-        this.setState({ idioma: idioma })
+        let usuario = await AsyncStorage.getItem("@OlhoFake:usuario")
+        let user = JSON.parse(usuario);
+        this.setState({ nome: user.nome })
+        this.setState({ login: user.login })
+        this.setState({ idioma: user.idioma })
+        this.setState({ id: user.id })
     }
 
     render() {
@@ -78,7 +73,6 @@ export default class Cadastro extends Component {
                 <View>
 
                     <Form style={{ alignItems: 'center' }}>
-                        {/*
                         <Item floatingLabel style={{ marginTop: 10 }}>
                             <Icon active name='person' />
                             <Input
@@ -97,7 +91,6 @@ export default class Cadastro extends Component {
                                 value={this.state.login}
                             />
                         </Item>
-                        */}
 
                         <Item style={{ marginTop: 50 }} onPress={() => this.setState({ idioma: 'pt' })}>
                             <Left>
@@ -124,7 +117,7 @@ export default class Cadastro extends Component {
                                 <Radio onPress={() => this.setState({ idioma: 'de' })} selected={this.state.idioma == 'de'} />
                             </Right>
                         </Item>
-                        <Item style={{ marginTop: 20 }}  onPress={() => this.setState({ idioma: 'el' })}>
+                        <Item style={{ marginTop: 20 }} onPress={() => this.setState({ idioma: 'el' })}>
                             <Left>
                                 <Text>Grego</Text>
                             </Left>

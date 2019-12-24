@@ -9,7 +9,6 @@ const api = axios.create({
     //baseURL: 'http://10.0.2.2:3333'
 })
 
-/*
 api.interceptors.request.use(async config => {
     const token = await AsyncStorage.getItem("@OlhoFake:token");
     if (token) {
@@ -17,6 +16,5 @@ api.interceptors.request.use(async config => {
     }
     return config;
 });
-*/
 
 export default api;

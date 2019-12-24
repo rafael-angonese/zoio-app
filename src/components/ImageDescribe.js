@@ -19,16 +19,11 @@ export default class ImageDescribe extends Component {
 
   async componentWillMount() {
     try {
-      //let usuario = await AsyncStorage.getItem("@OlhoFake:usuario")
-      //const user = JSON.parse(usuario);
+      let usuario = await AsyncStorage.getItem("@OlhoFake:usuario")
+      const user = JSON.parse(usuario);
 
-      let idioma =  await AsyncStorage.getItem("@Zoio:idioma")
-      if (idioma === null) {
-        idioma = 'pt'
-      }
       const response = await api.post('/vision/all', {
-        idioma: idioma,
-        //idioma: user.idioma,
+        idioma: user.idioma,
         file: this.props.navigation.getParam('base64', 'default value'),
       });
 
@@ -36,14 +31,13 @@ export default class ImageDescribe extends Component {
       this.setState({ spinner: false, labels: labels, objetos: objetos, textos: textos });
 
     } catch (error) {
-      alert("Ai, deu um erro, tente novamente!!")
-      //if (error.response.status == 401) {
-      //AsyncStorage.removeItem("@OlhoFake:token");
-      //AsyncStorage.removeItem("@OlhoFake:usuario");
-      //const { navigate } = this.props.navigation;
-      //alert("Ai mano faz o login novamento por favor!")
-      //navigate('Login');
-      //}
+      if (error.response.status == 401) {
+        AsyncStorage.removeItem("@OlhoFake:token");
+        AsyncStorage.removeItem("@OlhoFake:usuario");
+        const { navigate } = this.props.navigation;
+        alert("Ai mano faz o login novamento por favor!")
+        navigate('Login');
+      }
     }
   }
 

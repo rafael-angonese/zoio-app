@@ -2,8 +2,8 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
-//import Login from './components/Login';
-//import Cadastro from './components/Cadastro';
+import Login from './components/Login';
+import Cadastro from './components/Cadastro';
 import MainScreen from './components/MainScreen';
 import ImageDescribe from './components/ImageDescribe';
 import Sobre from './components/Sobre';
@@ -31,7 +31,7 @@ const Stack = createStackNavigator({
 });
 
 const Drawer = createDrawerNavigator({
-    MainScreen:  {
+    MainScreen: {
         screen: Stack,
     },
     Sobre: {
@@ -47,12 +47,12 @@ const Drawer = createDrawerNavigator({
 
 const Routes = createAppContainer(
     createSwitchNavigator({
-        //Login: {
-        //    screen: Login,
-        //},
-        //Cadastro: {
-        //    screen: Cadastro,
-        //},
+        Login: {
+            screen: Login,
+        },
+        Cadastro: {
+            screen: Cadastro,
+        },
         MainScreen: {
             screen: Drawer,
         },
